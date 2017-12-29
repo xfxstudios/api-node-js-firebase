@@ -31,6 +31,10 @@ app.use(express.static('public/'))
     var prueba = express.Router();
     prueba.get('/getUser/:id', function(req, res) {
         var email = req.params.id;
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         //var email = 'a@a.com';
         admin.auth().getUserByEmail(email)
           .then(function(userRecord) {
@@ -69,6 +73,11 @@ app.use(express.static('public/'))
         var nombre   = req.params.name;
         var phone    = req.params.phone;
         var password = req.params.password;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().createUser({
             email: email,
@@ -115,6 +124,11 @@ app.use(express.static('public/'))
         var phone    = req.params.phone;
         var password = req.params.password;
         var uid = req.params.uid;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().createUser({
             uid: uid,
@@ -162,6 +176,11 @@ app.use(express.static('public/'))
         var uid = req.params.uid;
         var phone    = req.params.phone;
         var nombre   = req.params.name;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().updateUser(uid, {
             phoneNumber: phone,
@@ -202,6 +221,11 @@ app.use(express.static('public/'))
         
         var uid   = req.params.uid;
         var email = req.params.email;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().updateUser(uid, {
             email: email,
@@ -239,6 +263,11 @@ app.use(express.static('public/'))
     validatemail.put('/validateUserEmail/:uid', function(req, res) {
         
         var uid   = req.params.uid;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().updateUser(uid, {
             emailVerified: true,
@@ -277,6 +306,11 @@ app.use(express.static('public/'))
         
         var uid   = req.params.uid;
         var photo = req.params.photo;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().updateUser(uid, {
             photoURL: photo,
@@ -315,6 +349,11 @@ app.use(express.static('public/'))
         
         var uid   = req.params.uid;
         var pass = req.params.pass;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().updateUser(uid, {
             password: pass,
@@ -352,6 +391,11 @@ app.use(express.static('public/'))
     suspenduid.put('/suspendUser/:uid', function(req, res) {
         
         var uid = req.params.uid;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().updateUser(uid, {
             disabled: true
@@ -387,6 +431,11 @@ app.use(express.static('public/'))
     activeuid.put('/activateUser/:uid', function(req, res) {
         
         var uid = req.params.uid;
+
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
         
         admin.auth().updateUser(uid, {
             disabled: false
@@ -420,6 +469,12 @@ app.use(express.static('public/'))
      deletUser.delete('/deleteUser/:uid', function(req, res) {
          
          var uid = req.params.uid;
+
+         res.header('Access-Control-Allow-Origin', '*');
+         res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+         res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+         res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+         
          admin.auth().deleteUser(uid)
         .then(function() {
           var data = {
