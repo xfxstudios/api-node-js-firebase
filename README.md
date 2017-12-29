@@ -645,6 +645,29 @@ __Ejemplo - Example__
 
 
 
+### CABECERAS CORS - CORS HEADERS ###
+
+Se ha agregado las cabeceras de respuesta para las peticiones cruzadas.
+
+Added response headers for cross requests.
+
+```javascript
+        res.header('Access-Control-Allow-Origin', '*');
+        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
+        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
+        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
+```
+
+
+> Pueden editar esta linea agregando el dominio permitido para las peticiones en caso de ser privada la api:
+
+> You can edit this line by adding the domain allowed for requests in case of being private api:
+
+`res.header('Access-Control-Allow-Origin', '*');`
+
+
+__Ejemplo - Example__
+`res.header('Access-Control-Allow-Origin', 'http://tudominio.com');`
 
 
 
