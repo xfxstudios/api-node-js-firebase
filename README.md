@@ -9,6 +9,8 @@ Esta API le permite desde un servidor node.js conectarse a su app firebase y adm
 This API allows you from a node.js server to connect to your firebase app and manage users among other things.
 
 
+
+
 Para usar los SDK de administrador de Firebase incluidos en esta API, necesitarás un proyecto de Firebase, una cuenta de servicio para comunicarte con el servicio de Firebase y un archivo de configuración con las credenciales de tu cuenta de servicio.
 
 To use the Firebase Administrator SDKs included in this API, you will need a Firebase project, a service account to communicate with the Firebase service, and a configuration file with the credentials of your service account.
@@ -18,14 +20,18 @@ To use the Firebase Administrator SDKs included in this API, you will need a Fir
 * Navigate to the tab [Cuentas de servicio](https://console.firebase.google.com/project/_/settings/serviceaccounts/adminsdk?authuser=1) on the project settings page.
 
 
+
 * Selecciona tu proyecto de Firebase. Si todavía no tienes uno, haz clic en Crear proyecto nuevo. Si ya tienes un proyecto de Google asociado a tu app, haz clic en Importar proyecto de Google.
 
 * Select your Firebase project. If you do not have one yet, click Create new project. If you already have a Google project associated with your app,click on Import Google project.
 
 
+
 * Haz clic en el botón Generar nueva clave privada en la parte inferior de la sección SDK de administrador de Firebase, en la pestaña Cuentas de servicio.
 
 * Click the Generate new private key button at the bottom of the Firebase Administrator SDK section, under the Service Accounts tab.
+
+
 
 
 Cuando hagas clic, se descargará un archivo JSON con las credenciales de tu cuenta de servicio. Lo necesitarás para inicializar el SDK en el siguiente paso.
@@ -34,14 +40,19 @@ When you click, a JSON file with the credentials of your service account will be
 
 
 
+
+
 > Importante: Este archivo contiene información confidencial, incluida la clave de encriptación privada de la cuenta de servicio.Protege su confidencialidad y nunca la almacenes en un repositorio público.
 
 > Important: This file contains confidential information, including the private encryption key of the service account. Protect your confidentiality and never store it in a public repository.
 
 
+
+
 Este archivo solo se genera una vez. Si esta clave se pierde o se filtra a terceros, puedes repetir las instrucciones anteriores a fin de crear una nueva clave JSON para la cuenta de servicio.
 
 This file is only generated once. If this key is lost or filtered to third parties, you can repeat the previous instructions in order to create a new JSON key for the service account.
+
 
 
 
@@ -60,22 +71,29 @@ Once you get the json file, configure your file __server.js__ with the data that
     });
 ```
 
+
+
 Cuando realices tu configuración puedes hacer pruebas iniciando tu servidor de esta manera
 
 When you make your configuration you can do tests starting your server in this way
 
 `node server.js`
 
+
+
 La API cuenta con varias funciones preestablecidas, pero pueden crear muchas más tanto para gestión de usuarios como para manejo de base de datos.
 
 The API has several pre-established functions, but they can create many more for both user management and database management.
+
 
 
 Con esta API puedes __Crear un Usuario nuevo__, __Actualizar un Usuario__, __Eliminar un Usuario__, __Suspender un Usuario__, __Reactivar un Usuario__, __Buscar un Usuario por su Email__.
 
 With this API you can __Create a new User__, __Update a User__, __Delete a User__, __Suspend a User__, __Reactivate a User__, __Search a User by Email__.
 
-###Buscar Usuario por Email - Search User by Email###
+
+
+### Buscar Usuario por Email - Search User by Email ###
 ```javascript
     var prueba = express.Router();
         prueba.get('/getUser/:id', function(req, res) {
@@ -119,12 +137,18 @@ This function receives the parameters as follows:
 `http://tuserver.com/getUser/email@searched.com`
 
 
+
+
+
 Retorna un json con la información sobre el usuario, en caso de no encontrar el usuario o no existir, retorna un error, ver la [tabla de errores de firebase](https://firebase.google.com/docs/auth/admin/errors?authuser=1) para detalles sobre estos
 
 Returns a json with the information about the user, in case of not finding the user or not existing, returns an error, see the [firebase error table](https://firebase.google.com/docs/auth/admin/errors?authuser=1) for details about these
 
 
-###Crear un Usuario - Create a User###
+
+
+
+### Crear un Usuario - Create a User ###
 
 ```javascript
 ar crear = express.Router();
@@ -182,9 +206,14 @@ __Ejemplo - Example__
 `http://tuserver.com/addUser/USER EMAIL/USER PHONE/USER PASSWORD/USER NAME`
 
 
+
+
+
 Retorna un json con la información sobre el usuario, en caso de no encontrar el usuario o no existir, retorna un error, ver la [tabla de errores de firebase](https://firebase.google.com/docs/auth/admin/errors?authuser=1) para detalles sobre estos
 
 Returns a json with the information about the user, in case of not finding the user or not existing, returns an error, see the [firebase error table](https://firebase.google.com/docs/auth/admin/errors?authuser=1) for details about these
+
+
 
 
 
@@ -243,14 +272,20 @@ __Ejemplo - Example__
 `http://tuserver.com/addUserUid/USER EMAIL/USER PHONE/USER PASSWORD/USER NAME/UID of USER`
 
 
-#Importante - Important#
+
+
+
+# Importante - Important #
 
 > Las funciones de __Actualziacion__, __Eliminación__, __Suspención__ y __Activación__ de un usuario se manejan solo y únicamente a través de __uid__ del usuario a aadministrar.
 
 > The functions of __Update__, __Elimination__, __Suspension__ y __Activation__ of a user are handled only and only through __uid__ of the user to administer.
 
 
-###Actualizar Nombre y Telefono de un Usuario - Update a User's Name and Phone###
+
+
+
+### Actualizar Nombre y Telefono de un Usuario - Update a User's Name and Phone ###
 
 ```javascript
 updateuid.put('/updateUserUid/:uid/:phone/:name', function(req, res) {
@@ -298,7 +333,10 @@ __Ejemplo - Example__
 
 
 
-###Actualiza Email del Usuario - Update User Email###
+
+
+
+### Actualiza Email del Usuario - Update User Email ###
 
 ```javascrip
 updateemail.put('/updateUserEmail/:uid/:email', function(req, res) {
@@ -342,7 +380,10 @@ __Ejemplo - Example__
 `http://tuserver.com/updateUserEmail/User's Uid / New Email`
 
 
-###Validar Email del Usuario - Validate User Email###
+
+
+
+### Validar Email del Usuario - Validate User Email ###
 
 ```javascript
 validatemail.put('/validateUserEmail/:uid', function(req, res) {
@@ -386,7 +427,10 @@ __Ejemplo - Example__
 `http://tuserver.com/validateUserEmail/User's Uid`
 
 
-###Actualizar foto del Usuario - Update User Photo###
+
+
+
+### Actualizar foto del Usuario - Update User Photo ###
 
 ```javascript
 updateFoto.put('/updateUserPhoto/:uid/:photo', function(req, res) {
@@ -431,7 +475,10 @@ __Ejemplo - Example__
 `http://tuserver.com/updateUserPhoto/User's Uid/Photo URL`
 
 
-###Actualziar Clave del Usuario - Update User Password###
+
+
+
+### Actualziar Clave del Usuario - Update User Password ###
 
 ```javascript
 updatePass.put('/updateUserPassword/:uid/:pass', function(req, res) {
@@ -476,7 +523,10 @@ __Ejemplo - Example__
 `http://tuserver.com/updateUserPassword/Uid of the User/New Password`
 
 
-###Suspender un Usuario - Suspend a Users###
+
+
+
+### Suspender un Usuario - Suspend a Users ###
 
 ```javascript
 suspenduid.put('/suspendUser/:uid', function(req, res) {
@@ -518,7 +568,10 @@ __Ejemplo - Example__
 `http://tuserver.com/suspendUser/User's Uid`
 
 
-###Activar un Usuario - Activate User###
+
+
+
+### Activar un Usuario - Activate User ###
 
 ```javascript
 activeuid.put('/activateUser/:uid', function(req, res) {
@@ -559,7 +612,10 @@ __Ejemplo - Example__
 `http://tuserver.com/activateUser/User's Uid`
 
 
-###Eliminar un Usuario - Delete User###
+
+
+
+### Eliminar un Usuario - Delete User ###
 
 ```javascript
 deletUser.delete('/deleteUser/:uid', function(req, res) {
@@ -589,9 +645,14 @@ __Ejemplo - Example__
 
 
 
+
+
+
 Como se menciona al inicio se pueden editar o agregar funciones que necesite para su uso o el de su app.
 
 As mentioned at the beginning you can edit or add functions that you need for your application or your app.
+
+
 
 
 
@@ -600,9 +661,13 @@ De igual manera deben tener un proyecto creado en la __[Consola de Firebase](htt
 In the same way they must have a project created in the __[Firebase Console](https://console.firebase.google.com/?authuser=1)__.
 
 
+
+
 Pueden montarse un Servidor NODE.js en la plataforma __[HEROKU](http://heroku.com)__ de manera gratuita, esta cuenta le otorga 550 horas de uso mensuales para utilizar el servidor.
 
 A Server NODE.js can be mounted on the platform __[HEROKU](http://heroku.com)__ for free, this account gives you 550 hours of monthly use to use the server.
+
+
 
 
 De igual manera la plataforma le otorga una url segura para su uso, así com las herramientas necesarias para montar su servidor de manera segura.
