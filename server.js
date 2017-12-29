@@ -17,7 +17,8 @@ app.use(express.static('public/'))
       databaseURL: "FIREBASE DATABASE URL",
     });
 
-  //Ruta Directa
+  //Ruta Directa en caso de no usar recurso estatico
+  //Direct route in case of not using static resource
   /*var router = express.Router();
   router.get('/', function(req, res) {
     res.send("HITCEL Test Server");
@@ -25,7 +26,8 @@ app.use(express.static('public/'))
   app.use(router);*/
 
 
-    //Peticion de datos de Usuario
+    //Peticion de datos de Usuario por Email
+    //Request of User data by Email
     var prueba = express.Router();
     prueba.get('/getUser/:id', function(req, res) {
         var email = req.params.id;
@@ -60,6 +62,7 @@ app.use(express.static('public/'))
 
 
     //Crear un Usuario
+    //Create a User
     var crear = express.Router();
     crear.post('/addUser/:email/:phone/:password/:name', function(req, res) {
         var email    = req.params.email;
@@ -104,6 +107,7 @@ app.use(express.static('public/'))
 
 
     //Crear un Usuario UID Personalizado
+    //Create a Custom UID User
     var crearuid = express.Router();
     crearuid.post('/addUserUid/:email/:phone/:password/:name/:uid', function(req, res) {
         var email    = req.params.email;
@@ -151,6 +155,7 @@ app.use(express.static('public/'))
     
     
     //Actualiza Telefono y Nombre de un Usuario en Firebase
+    //Update Phone and User Name in Firebase
     var updateuid = express.Router();
     updateuid.put('/updateUserUid/:uid/:phone/:name', function(req, res) {
         
@@ -191,6 +196,7 @@ app.use(express.static('public/'))
     
     
     //Actualiza Email de un Usuario
+    //Update a User's Email
     var updateemail = express.Router();
     updateemail.put('/updateUserEmail/:uid/:email', function(req, res) {
         
@@ -228,6 +234,7 @@ app.use(express.static('public/'))
 
 
     //Verifica Email de un Usuario
+    //Verify a User's Email
     var validatemail = express.Router();
     validatemail.put('/validateUserEmail/:uid', function(req, res) {
         
@@ -264,6 +271,7 @@ app.use(express.static('public/'))
 
 
     //Actualiza Foto de un Usuario
+    //Update a User's Photo
     var updateFoto = express.Router();
     updateFoto.put('/updateUserPhoto/:uid/:photo', function(req, res) {
         
@@ -301,8 +309,9 @@ app.use(express.static('public/'))
 
 
     //Actualiza Clave de un Usuario
+    //Update a User's Password
     var updatePass = express.Router();
-    updatePass.put('/updateUserPhoto/:uid/:pass', function(req, res) {
+    updatePass.put('/updateUserPassword/:uid/:pass', function(req, res) {
         
         var uid   = req.params.uid;
         var pass = req.params.pass;
@@ -338,6 +347,7 @@ app.use(express.static('public/'))
     
     
     //Suspende un Usuario por su UID
+    //Suspend a User for his UID
     var suspenduid = express.Router();
     suspenduid.put('/suspendUser/:uid', function(req, res) {
         
@@ -372,6 +382,7 @@ app.use(express.static('public/'))
     
     
     //Activar un Usuario por su UID
+    //Activate a User by his UID
     var activeuid = express.Router();
     activeuid.put('/activateUser/:uid', function(req, res) {
         
@@ -404,6 +415,7 @@ app.use(express.static('public/'))
     app.use(activeuid);
 
      //Eliminar un Usuario
+     //Delete a User
      var deletUser = express.Router();
      deletUser.delete('/deleteUser/:uid', function(req, res) {
          
@@ -422,8 +434,6 @@ app.use(express.static('public/'))
          
      });
      app.use(deletUser);
-
-
 
 
 var server = http.createServer(app).listen(port, function() {  
