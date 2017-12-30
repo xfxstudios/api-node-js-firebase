@@ -734,7 +734,12 @@ __Petición PHP - Petition PHP__
             }
             curl_close($curl);
             $data = explode("vegur",$resp);
-            return json_decode($data[1]);
+            $datos json_decode($data[1]);
+            if($datos->code!="200"){
+              return $datos->message;
+            }else{
+              return $datos;
+            }
     }//
 ```
 
