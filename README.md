@@ -707,7 +707,8 @@ __Petición PHP - Petition PHP__
                 return 'Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl);
             }
             curl_close($curl);
-            return $resp;
+            $data = explode("vegur",$resp);
+            return json_decode($data[1]);
     }//
 ```
 
