@@ -28,8 +28,8 @@ app.use(express.static('public/'))
 
     //Peticion de datos de Usuario por Email
     //Request of User data by Email
-    var prueba = express.Router();
-    prueba.get('/getUser/:id', function(req, res) {
+    var getData = express.Router();
+    getData.get('/getUser/:id', function(req, res) {
         var email = req.params.id;
         res.header('Access-Control-Allow-Origin', '*');
         res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
@@ -64,7 +64,7 @@ app.use(express.static('public/'))
               res.status(404).jsonp(error);
           });
     });
-    app.use(prueba);
+    app.use(getData);
 
 
     //Crear un Usuario

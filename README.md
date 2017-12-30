@@ -95,8 +95,8 @@ With this API you can __Create a new User__, __Update a User__, __Delete a User_
 
 ### Buscar Usuario por Email - Search User by Email ###
 ```javascript
-    var prueba = express.Router();
-        prueba.get('/getUser/:id', function(req, res) {
+    var getData = express.Router();
+        getData.get('/getUser/:id', function(req, res) {
             var email = req.params.id;
             admin.auth().getUserByEmail(email)
             .then(function(userRecord) {
@@ -126,7 +126,7 @@ With this API you can __Create a new User__, __Update a User__, __Delete a User_
                 res.status(404).jsonp(error);
             });
         });
-        app.use(prueba);
+        app.use(getData);
 ```
 
 Esta funcion recibe los parámetros de la siguiente manera:
