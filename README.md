@@ -670,6 +670,48 @@ __Ejemplo - Example__
 `res.header('Access-Control-Allow-Origin', 'http://tudominio.com');`
 
 
+#### Ejemplos de Conexión desde AJAX y PHP - Connection examples from AJAX and PHP ####
+
+__Peticion simple Ajax - Simple petition Ajax__
+
+```javascript
+  var url = 'https://tuapp.com/addUser/a@a.com/+5802418474129/123456789/Your Name';
+  $.post(url)
+  .done(function(resp){ 
+    console.log(resp); 
+  }).fail(function(err){ 
+    console.log(err);
+  });*/
+```
+
+
+
+__Petición PHP - Petition PHP__
+
+```php
+//Registra un Usuario en Firebase a Través de la API
+//Register a User in Firebase through the API
+    public function addUser($X){
+            $url = $this->url."addUser/".$X->user."/".$X->movil."/".$X->pass."/".str_replace(" ","%20",$X->name);
+            $curl = curl_init();
+            curl_setopt_array($curl, array(
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_URL            => $url,
+                CURLOPT_CUSTOMREQUEST  => 'POST',//POST, GET, PUT, DELETE
+                CURLOPT_HEADER         => true,
+                CURLOPT_CONNECTTIMEOUT => 120,
+                CURLOPT_TIMEOUT        => 120
+            ));
+            $resp = curl_exec($curl);
+            if(!curl_exec($curl)){
+                return 'Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl);
+            }
+            curl_close($curl);
+            return $resp;
+    }//
+```
+
+
 
 Como se menciona al inicio se pueden editar o agregar funciones que necesite para su uso o el de su app.
 
