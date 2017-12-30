@@ -115,7 +115,9 @@ With this API you can __Create a new User__, __Update a User__, __Delete a User_
                     tiempos : {
                         ultimoLogin : userRecord.metadata.lastSignInTime,
                         ultimoUpdate : userRecord.metadata.creationTime,
-                    }
+                    },
+                    code:'200',
+                    message:''
                     }
                 res.status(200).jsonp(data);
             })
@@ -183,7 +185,9 @@ ar crear = express.Router();
                 tiempos : {
                   ultimoLogin : userRecord.metadata.lastSignInTime,
                   ultimoUpdate : userRecord.metadata.creationTime,
-                }
+                },
+                  code:'200',
+                  message:''
               }
             res.status(200).jsonp(data);
           })
@@ -255,7 +259,9 @@ crearuid.post('/addUserUid/:email/:phone/:password/:name/:uid', function(req, re
                 tiempos : {
                   ultimoLogin : userRecord.metadata.lastSignInTime,
                   ultimoUpdate : userRecord.metadata.creationTime,
-                }
+                },
+                  code:'200',
+                  message:''
               }
             res.status(200).jsonp(data);
           })
@@ -315,7 +321,9 @@ updateuid.put('/updateUserUid/:uid/:phone/:name', function(req, res) {
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -338,7 +346,7 @@ __Ejemplo - Example__
 
 ### Actualiza Email del Usuario - Update User Email ###
 
-```javascrip
+```javascript
 updateemail.put('/updateUserEmail/:uid/:email', function(req, res) {
         
         var uid   = req.params.uid;
@@ -363,7 +371,9 @@ updateemail.put('/updateUserEmail/:uid/:email', function(req, res) {
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -409,7 +419,9 @@ validatemail.put('/validateUserEmail/:uid', function(req, res) {
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -457,7 +469,9 @@ updateFoto.put('/updateUserPhoto/:uid/:photo', function(req, res) {
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -505,7 +519,9 @@ updatePass.put('/updateUserPassword/:uid/:pass', function(req, res) {
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -550,7 +566,9 @@ suspenduid.put('/suspendUser/:uid', function(req, res) {
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -594,7 +612,9 @@ activeuid.put('/activateUser/:uid', function(req, res) {
                   },
                   tiempos : {
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -678,10 +698,16 @@ __Peticion simple Ajax - Simple petition Ajax__
   var url = 'https://tuapp.com/addUser/a@a.com/+5802418474129/123456789/Your Name';
   $.post(url)
   .done(function(resp){ 
-    console.log(resp); 
+    console.log(resp);
+    var B = eval('('+resp+')');
+    if(B.code=="200"){
+      //Success code
+    } else{
+      //Error code
+    }
   }).fail(function(err){ 
     console.log(err);
-  });*/
+  });
 ```
 
 

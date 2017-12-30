@@ -53,7 +53,9 @@ app.use(express.static('public/'))
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -104,7 +106,9 @@ app.use(express.static('public/'))
                 tiempos : {
                   ultimoLogin : userRecord.metadata.lastSignInTime,
                   ultimoUpdate : userRecord.metadata.creationTime,
-                }
+                },
+                code:'200',
+                message:''
               }
             res.status(200).jsonp(data);
           })
@@ -156,7 +160,9 @@ app.use(express.static('public/'))
                 tiempos : {
                   ultimoLogin : userRecord.metadata.lastSignInTime,
                   ultimoUpdate : userRecord.metadata.creationTime,
-                }
+                },
+                code:'200',
+                message:''
               }
             res.status(200).jsonp(data);
           })
@@ -203,7 +209,9 @@ app.use(express.static('public/'))
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -246,7 +254,9 @@ app.use(express.static('public/'))
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -288,7 +298,9 @@ app.use(express.static('public/'))
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -331,7 +343,9 @@ app.use(express.static('public/'))
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -374,7 +388,9 @@ app.use(express.static('public/'))
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -414,7 +430,9 @@ app.use(express.static('public/'))
                   tiempos : {
                     ultimoLogin : userRecord.metadata.lastSignInTime,
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
@@ -453,7 +471,9 @@ app.use(express.static('public/'))
                   },
                   tiempos : {
                     ultimoUpdate : userRecord.metadata.creationTime,
-                  }
+                  },
+                  code:'200',
+                  message:''
                 }
               res.status(200).jsonp(data);
           })
