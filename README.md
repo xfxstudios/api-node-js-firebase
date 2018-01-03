@@ -4,6 +4,8 @@ API NODE.JS - GOOGLE FIREBASE
 * Autor: __Carlos Quintero__
 * Email: __[info.fxstudios&#64;gmail.com](mailto:info.fxstudios@gmail.com).
 
+### [DONATE](https://www.paypal.me/carlos14624/) ##
+
 Esta API le permite desde un servidor node.js conectarse a su app firebase y administrar usuarios entre otras cosas.
 
 This API allows you from a node.js server to connect to your firebase app and manage users among other things.
