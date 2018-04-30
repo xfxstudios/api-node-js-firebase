@@ -97,38 +97,41 @@ With this API you can __Create a new User__, __Update a User__, __Delete a User_
 
 ### Buscar Usuario por Email - Search User by Email ###
 ```javascript
-    var getData = express.Router();
-        getData.get('/getUser/:id', function(req, res) {
-            var email = req.params.id;
-            admin.auth().getUserByEmail(email)
-            .then(function(userRecord) {
-                var data = {
-                    uid : userRecord.uid,
-                    datos : {
-                        email : userRecord.email,
-                        nombre : userRecord.displayName,
-                        foto : userRecord.photoURL,
-                        telefono : userRecord.phoneNumber,
-                    },
-                    estados : {
-                        emailVerificado : userRecord.emailVerified,
-                        suspendido : userRecord.disabled,
-                    },
-                    tiempos : {
-                        ultimoLogin : userRecord.metadata.lastSignInTime,
-                        ultimoUpdate : userRecord.metadata.creationTime,
-                    },
-                    code:'200',
-                    message:''
-                    }
-                res.status(200).jsonp(data);
-            })
-            .catch(function(error) {
-                console.log("Error fetching user data:", error);
-                res.status(404).jsonp(error);
-            });
-        });
-        app.use(getData);
+    app.get('/getUser/:id', function(req, res) {
+    var email = req.params.id;
+
+    admin.auth().getUserByEmail(email)
+      .then(function(userRecord) {
+          var data = {
+              uid : userRecord.uid,
+              datos : {
+                email : userRecord.email,
+                nombre : userRecord.displayName,
+                foto : userRecord.photoURL,
+                telefono : userRecord.phoneNumber,
+              },
+              estados : {
+                emailVerificado : userRecord.emailVerified,
+                suspendido : userRecord.disabled,
+              },
+              tiempos : {
+                ultimoLogin : userRecord.metadata.lastSignInTime,
+                ultimoUpdate : userRecord.metadata.creationTime,
+              },
+              code:'200',
+              message:'Datos del usuario ' + userRecord.displayName
+            }
+          res
+            .status(200)
+            .json(data);
+      })
+      .catch(function(error) {
+          console.log("Error fetching user data:", error);
+          res
+            .status(404)
+            .json(error);
+      });
+  });
 ```
 
 Esta funcion recibe los parámetros de la siguiente manera:
@@ -155,49 +158,51 @@ Returns a json with the information about the user, in case of not finding the u
 ### Crear un Usuario - Create a User ###
 
 ```javascript
-ar crear = express.Router();
-    crear.post('/addUser/:email/:phone/:password/:name', function(req, res) {
-        var email    = req.params.email;
-        var nombre   = req.params.name;
-        var phone    = req.params.phone;
-        var password = req.params.password;
-        
-        admin.auth().createUser({
-            email: email,
-            emailVerified: false,
-            phoneNumber: phone,
-            password: password,
-            displayName: nombre,
-            photoURL: "http://www.example.com/12345678/photo.png",
-            disabled: false
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                datos : {
-                  email : userRecord.email,
-                  nombre : userRecord.displayName,
-                  foto : userRecord.photoURL,
-                  telefono : userRecord.phoneNumber,
-                },
-                estados : {
-                  emailVerificado : userRecord.emailVerified,
-                  suspendido : userRecord.disabled,
-                },
-                tiempos : {
-                  ultimoLogin : userRecord.metadata.lastSignInTime,
-                  ultimoUpdate : userRecord.metadata.creationTime,
-                },
-                  code:'200',
-                  message:''
-              }
-            res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+    app.post('/addUser/:email/:phone/:password/:name', function(req, res) {
+      var email    = req.params.email;
+      var nombre   = req.params.name;
+      var phone    = req.params.phone;
+      var password = req.params.password;
+      
+      admin.auth().createUser({
+          email: email,
+          emailVerified: false,
+          phoneNumber: phone,
+          password: password,
+          displayName: nombre,
+          photoURL: "https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png",
+          disabled: false
+        })
+        .then(function(userRecord) {
+          var data = {
+            uid : userRecord.uid,
+              datos : {
+                email : userRecord.email,
+                nombre : userRecord.displayName,
+                foto : userRecord.photoURL,
+                telefono : userRecord.phoneNumber,
+              },
+              estados : {
+                emailVerificado : userRecord.emailVerified,
+                suspendido : userRecord.disabled,
+              },
+              tiempos : {
+                ultimoLogin : userRecord.metadata.lastSignInTime,
+                ultimoUpdate : userRecord.metadata.creationTime,
+              },
+              code:'200',
+              message:'Usuario '+userRecord.displayName+' Creado Exitosamente'
+            }
+          res
+              .status(200)
+              .json(data);
+        })
+        .catch(function(error) {
+          res
+              .status(404)
+              .json(error);
+        });
     });
-    app.use(crear);
 ```
 
 Esta funcion recibe 4 parametros para su creación y asigna un uid automatico al usuario creado.
@@ -228,50 +233,49 @@ Al igual que la anterior podemos crear el usuario pasandole el uid personalizado
 Like the previous one, we can create the user by passing the custom uid that we want
 
 ```javascript
-crearuid.post('/addUserUid/:email/:phone/:password/:name/:uid', function(req, res) {
-        var email    = req.params.email;
-        var nombre   = req.params.name;
-        var phone    = req.params.phone;
-        var password = req.params.password;
-        var uid = req.params.uid;
-        
-        admin.auth().createUser({
-            uid: uid,
-            email: email,
-            emailVerified: false,
-            phoneNumber: phone,
-            password: password,
-            displayName: nombre,
-            photoURL: "http://www.example.com/12345678/photo.png",
-            disabled: false
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                datos : {
-                  email : userRecord.email,
-                  nombre : userRecord.displayName,
-                  foto : userRecord.photoURL,
-                  telefono : userRecord.phoneNumber,
-                },
-                estados : {
-                  emailVerificado : userRecord.emailVerified,
-                  suspendido : userRecord.disabled,
-                },
-                tiempos : {
-                  ultimoLogin : userRecord.metadata.lastSignInTime,
-                  ultimoUpdate : userRecord.metadata.creationTime,
-                },
-                  code:'200',
-                  message:''
-              }
-            res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.post('/addUserUid/:email/:phone/:password/:name/:uid', function(req, res) {
+  var email    = req.params.email;
+  var nombre   = req.params.name;
+  var phone    = req.params.phone;
+  var password = req.params.password;
+  var uid = req.params.uid;
+  
+  admin.auth().createUser({
+      uid: uid,
+      email: email,
+      emailVerified: false,
+      phoneNumber: phone,
+      password: password,
+      displayName: nombre,
+      photoURL: "https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png",
+      disabled: false
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+          datos : {
+            email : userRecord.email,
+            nombre : userRecord.displayName,
+            foto : userRecord.photoURL,
+            telefono : userRecord.phoneNumber,
+          },
+          estados : {
+            emailVerificado : userRecord.emailVerified,
+            suspendido : userRecord.disabled,
+          },
+          tiempos : {
+            ultimoLogin : userRecord.metadata.lastSignInTime,
+            ultimoUpdate : userRecord.metadata.creationTime,
+          },
+          code:'200',
+          message:'Usuario '+userRecord.displayName+' Creado extosamente'
+        }
+      res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(crearuid);
+});
 ```
 __Ejemplo - Example__
 
@@ -296,44 +300,43 @@ __Ejemplo - Example__
 ### Actualizar Nombre y Telefono de un Usuario - Update a User's Name and Phone ###
 
 ```javascript
-updateuid.put('/updateUserUid/:uid/:phone/:name', function(req, res) {
-        
-        var uid = req.params.uid;
-        var phone    = req.params.phone;
-        var nombre   = req.params.name;
-        
-        admin.auth().updateUser(uid, {
-            phoneNumber: phone,
-            displayName: nombre,
-            disabled: false
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                  datos : {
-                    email : userRecord.email,
-                    nombre : userRecord.displayName,
-                    foto : userRecord.photoURL,
-                    telefono : userRecord.phoneNumber,
-                  },
-                  estados : {
-                    emailVerificado : userRecord.emailVerified,
-                    suspendido : userRecord.disabled,
-                  },
-                  tiempos : {
-                    ultimoLogin : userRecord.metadata.lastSignInTime,
-                    ultimoUpdate : userRecord.metadata.creationTime,
-                  },
-                  code:'200',
-                  message:''
-                }
-              res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.put('/updateUserUid/:uid/:phone/:name', function(req, res) {
+      
+  var uid = req.params.uid;
+  var phone    = req.params.phone;
+  var nombre   = req.params.name;
+  
+  admin.auth().updateUser(uid, {
+      phoneNumber: phone,
+      displayName: nombre,
+      disabled: false
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+            datos : {
+              email : userRecord.email,
+              nombre : userRecord.displayName,
+              foto : userRecord.photoURL,
+              telefono : userRecord.phoneNumber,
+            },
+            estados : {
+              emailVerificado : userRecord.emailVerified,
+              suspendido : userRecord.disabled,
+            },
+            tiempos : {
+              ultimoLogin : userRecord.metadata.lastSignInTime,
+              ultimoUpdate : userRecord.metadata.creationTime,
+            },
+            code:'200',
+            message:''
+          }
+        res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(updateuid);
+});
 ```
 __Ejemplo - Example__
 
@@ -349,41 +352,40 @@ __Ejemplo - Example__
 ### Actualiza Email del Usuario - Update User Email ###
 
 ```javascript
-updateemail.put('/updateUserEmail/:uid/:email', function(req, res) {
-        
-        var uid   = req.params.uid;
-        var email = req.params.email;
-        
-        admin.auth().updateUser(uid, {
-            email: email,
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                  datos : {
-                    email : userRecord.email,
-                    nombre : userRecord.displayName,
-                    foto : userRecord.photoURL,
-                    telefono : userRecord.phoneNumber,
-                  },
-                  estados : {
-                    emailVerificado : userRecord.emailVerified,
-                    suspendido : userRecord.disabled,
-                  },
-                  tiempos : {
-                    ultimoLogin : userRecord.metadata.lastSignInTime,
-                    ultimoUpdate : userRecord.metadata.creationTime,
-                  },
-                  code:'200',
-                  message:''
-                }
-              res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.put('/updateUserEmail/:uid/:email', function(req, res) {
+      
+  var uid   = req.params.uid;
+  var email = req.params.email;
+  
+  admin.auth().updateUser(uid, {
+      email: email,
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+            datos : {
+              email : userRecord.email,
+              nombre : userRecord.displayName,
+              foto : userRecord.photoURL,
+              telefono : userRecord.phoneNumber,
+            },
+            estados : {
+              emailVerificado : userRecord.emailVerified,
+              suspendido : userRecord.disabled,
+            },
+            tiempos : {
+              ultimoLogin : userRecord.metadata.lastSignInTime,
+              ultimoUpdate : userRecord.metadata.creationTime,
+            },
+            code:'200',
+            message:'Email del usuario '+userRecord.displayName+' Actualizado'
+          }
+        res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(updateemail);
+});
 ```
 __Ejemplo - Example__
 
@@ -398,40 +400,39 @@ __Ejemplo - Example__
 ### Validar Email del Usuario - Validate User Email ###
 
 ```javascript
-validatemail.put('/validateUserEmail/:uid', function(req, res) {
-        
-        var uid   = req.params.uid;
-        
-        admin.auth().updateUser(uid, {
-            emailVerified: true,
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                  datos : {
-                    email : userRecord.email,
-                    nombre : userRecord.displayName,
-                    foto : userRecord.photoURL,
-                    telefono : userRecord.phoneNumber,
-                  },
-                  estados : {
-                    emailVerificado : userRecord.emailVerified,
-                    suspendido : userRecord.disabled,
-                  },
-                  tiempos : {
-                    ultimoLogin : userRecord.metadata.lastSignInTime,
-                    ultimoUpdate : userRecord.metadata.creationTime,
-                  },
-                  code:'200',
-                  message:''
-                }
-              res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.put('/validateUserEmail/:uid', function(req, res) {
+      
+  var uid   = req.params.uid;
+  
+  admin.auth().updateUser(uid, {
+      emailVerified: true,
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+            datos : {
+              email : userRecord.email,
+              nombre : userRecord.displayName,
+              foto : userRecord.photoURL,
+              telefono : userRecord.phoneNumber,
+            },
+            estados : {
+              emailVerificado : userRecord.emailVerified,
+              suspendido : userRecord.disabled,
+            },
+            tiempos : {
+              ultimoLogin : userRecord.metadata.lastSignInTime,
+              ultimoUpdate : userRecord.metadata.creationTime,
+            },
+            code:'200',
+            message:'Email del usuario '+userRecord.displayName+' validado'
+          }
+        res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(validatemail);
+});
 ```
 
 __Ejemplo - Example__
@@ -447,41 +448,40 @@ __Ejemplo - Example__
 ### Actualizar foto del Usuario - Update User Photo ###
 
 ```javascript
-updateFoto.put('/updateUserPhoto/:uid/:photo', function(req, res) {
-        
-        var uid   = req.params.uid;
-        var photo = req.params.photo;
-        
-        admin.auth().updateUser(uid, {
-            photoURL: photo,
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                  datos : {
-                    email : userRecord.email,
-                    nombre : userRecord.displayName,
-                    foto : userRecord.photoURL,
-                    telefono : userRecord.phoneNumber,
-                  },
-                  estados : {
-                    emailVerificado : userRecord.emailVerified,
-                    suspendido : userRecord.disabled,
-                  },
-                  tiempos : {
-                    ultimoLogin : userRecord.metadata.lastSignInTime,
-                    ultimoUpdate : userRecord.metadata.creationTime,
-                  },
-                  code:'200',
-                  message:''
-                }
-              res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.put('/updateUserPhoto/:uid/:photo', function(req, res) {
+      
+  var uid   = req.params.uid;
+  var photo = req.params.photo;
+  
+  admin.auth().updateUser(uid, {
+      photoURL: photo,
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+            datos : {
+              email : userRecord.email,
+              nombre : userRecord.displayName,
+              foto : userRecord.photoURL,
+              telefono : userRecord.phoneNumber,
+            },
+            estados : {
+              emailVerificado : userRecord.emailVerified,
+              suspendido : userRecord.disabled,
+            },
+            tiempos : {
+              ultimoLogin : userRecord.metadata.lastSignInTime,
+              ultimoUpdate : userRecord.metadata.creationTime,
+            },
+            code:'200',
+            message:'Foto del Usuario '+userRecord.displayName+' Actualizada'
+          }
+        res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(updateFoto);
+});
 ```
 
 __Ejemplo - Example__
@@ -497,41 +497,40 @@ __Ejemplo - Example__
 ### Actualziar Clave del Usuario - Update User Password ###
 
 ```javascript
-updatePass.put('/updateUserPassword/:uid/:pass', function(req, res) {
-        
-        var uid   = req.params.uid;
-        var pass = req.params.pass;
-        
-        admin.auth().updateUser(uid, {
-            password: pass,
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                  datos : {
-                    email : userRecord.email,
-                    nombre : userRecord.displayName,
-                    foto : userRecord.photoURL,
-                    telefono : userRecord.phoneNumber,
-                  },
-                  estados : {
-                    emailVerificado : userRecord.emailVerified,
-                    suspendido : userRecord.disabled,
-                  },
-                  tiempos : {
-                    ultimoLogin : userRecord.metadata.lastSignInTime,
-                    ultimoUpdate : userRecord.metadata.creationTime,
-                  },
-                  code:'200',
-                  message:''
-                }
-              res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.put('/updateUserPassword/:uid/:pass', function(req, res) {
+      
+  var uid   = req.params.uid;
+  var pass = req.params.pass;
+  
+  admin.auth().updateUser(uid, {
+      password: pass,
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+            datos : {
+              email : userRecord.email,
+              nombre : userRecord.displayName,
+              foto : userRecord.photoURL,
+              telefono : userRecord.phoneNumber,
+            },
+            estados : {
+              emailVerificado : userRecord.emailVerified,
+              suspendido : userRecord.disabled,
+            },
+            tiempos : {
+              ultimoLogin : userRecord.metadata.lastSignInTime,
+              ultimoUpdate : userRecord.metadata.creationTime,
+            },
+            code:'200',
+            message:'Clave del Usuario '+userRecord.displayName+' actualizada'
+          }
+        res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(updatePass);
+});
 ```
 
 __Ejemplo - Example__
@@ -547,38 +546,37 @@ __Ejemplo - Example__
 ### Suspender un Usuario - Suspend a Users ###
 
 ```javascript
-suspenduid.put('/suspendUser/:uid', function(req, res) {
-        
-        var uid = req.params.uid;
-        
-        admin.auth().updateUser(uid, {
-            disabled: true
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                  datos : {
-                    email : userRecord.email,
-                    nombre : userRecord.displayName,
-                    foto : userRecord.photoURL,
-                  },
-                  estados : {
-                    suspendido : userRecord.disabled,
-                  },
-                  tiempos : {
-                    ultimoLogin : userRecord.metadata.lastSignInTime,
-                    ultimoUpdate : userRecord.metadata.creationTime,
-                  },
-                  code:'200',
-                  message:''
-                }
-              res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.put('/suspendUser/:uid', function(req, res) {
+      
+  var uid = req.params.uid;
+  
+  admin.auth().updateUser(uid, {
+      disabled: true
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+            datos : {
+              email : userRecord.email,
+              nombre : userRecord.displayName,
+              foto : userRecord.photoURL,
+            },
+            estados : {
+              suspendido : userRecord.disabled,
+            },
+            tiempos : {
+              ultimoLogin : userRecord.metadata.lastSignInTime,
+              ultimoUpdate : userRecord.metadata.creationTime,
+            },
+            code:'200',
+            message:'El usuario '+userRecord.displayName+' ha sido suspendido'
+          }
+        res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(suspenduid);
+});
 ```
 
 __Ejemplo - Example__
@@ -594,37 +592,37 @@ __Ejemplo - Example__
 ### Activar un Usuario - Activate User ###
 
 ```javascript
-activeuid.put('/activateUser/:uid', function(req, res) {
-        
-        var uid = req.params.uid;
-        
-        admin.auth().updateUser(uid, {
-            disabled: false
-          })
-          .then(function(userRecord) {
-            var data = {
-              uid : userRecord.uid,
-                  datos : {
-                    email : userRecord.email,
-                    nombre : userRecord.displayName,
-                    foto : userRecord.photoURL,
-                  },
-                  estados : {
-                    suspendido : userRecord.disabled,
-                  },
-                  tiempos : {
-                    ultimoUpdate : userRecord.metadata.creationTime,
-                  },
-                  code:'200',
-                  message:''
-                }
-              res.status(200).jsonp(data);
-          })
-          .catch(function(error) {
-            res.status(404).jsonp(error);
-          });
+app.put('/activateUser/:uid', function(req, res) {
+      
+  var uid = req.params.uid;
+  
+  admin.auth().updateUser(uid, {
+      disabled: false
+    })
+    .then(function(userRecord) {
+      var data = {
+        uid : userRecord.uid,
+            datos : {
+              email : userRecord.email,
+              nombre : userRecord.displayName,
+              foto : userRecord.photoURL,
+            },
+            estados : {
+              suspendido : userRecord.disabled,
+            },
+            tiempos : {
+              ultimoUpdate : userRecord.metadata.creationTime,
+            },
+            code:'200',
+            message:'El usuario '+userRecord.displayName+' ha sido reactivado'
+          }
+        res.status(200).json(data);
+    })
+    .catch(function(error) {
+      res.status(404).json(error);
     });
-    app.use(activeuid);
+});
+
 ```
 
 __Ejemplo - Example__
@@ -640,23 +638,22 @@ __Ejemplo - Example__
 ### Eliminar un Usuario - Delete User ###
 
 ```javascript
-deletUser.delete('/deleteUser/:uid', function(req, res) {
-         
-         var uid = req.params.uid;
-         admin.auth().deleteUser(uid)
-        .then(function() {
-          var data = {
-                code:'200',
-                message:'User Success Delete'
-            }
-          res.status(200).jsonp(data);
-        })
-        .catch(function(error) {
-          res.status(404).jsonp(error);
-        });
-         
-     });
-     app.use(deletUser);
+  app.delete('/deleteUser/:uid', function(req, res) {
+        
+    var uid = req.params.uid;
+    
+    admin.auth().deleteUser(uid)
+  .then(function() {
+    var data = {
+          code:'200',
+          message:'El Usuario ha Sido Eliminado'
+      }
+    res.status(200).json(data);
+  })
+  .catch(function(error) {
+    res.status(404).json(error);
+  });
+  });
 ```
 
 __Ejemplo - Example__
@@ -664,32 +661,6 @@ __Ejemplo - Example__
 `http://tuserver.com/deleteUser/Uid del Usuario`
 
 `http://tuserver.com/deleteUser/User's Uid`
-
-
-
-### CABECERAS CORS - CORS HEADERS ###
-
-Se ha agregado las cabeceras de respuesta para las peticiones cruzadas.
-
-Added response headers for cross requests.
-
-```javascript
-        res.header('Access-Control-Allow-Origin', '*');
-        res.header('Access-Control-Allow-Headers', 'Authorization, X-API-KEY, Origin, X-Requested-With, Content-Type, Accept, Access-Control-Allow-Request-Method');
-        res.header('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, DELETE');
-        res.header('Allow', 'GET, POST, OPTIONS, PUT, DELETE');
-```
-
-
-> Pueden editar esta linea agregando el dominio permitido para las peticiones en caso de ser privada la api:
-
-> You can edit this line by adding the domain allowed for requests in case of being private api:
-
-`res.header('Access-Control-Allow-Origin', '*');`
-
-
-__Ejemplo - Example__
-`res.header('Access-Control-Allow-Origin', 'http://tudominio.com');`
 
 
 #### Ejemplos de Conexión desde AJAX y PHP - Connection examples from AJAX and PHP ####
@@ -726,7 +697,6 @@ __Petición PHP - Petition PHP__
                 CURLOPT_RETURNTRANSFER => true,
                 CURLOPT_URL            => $url,
                 CURLOPT_CUSTOMREQUEST  => 'POST',//POST, GET, PUT, DELETE
-                CURLOPT_HEADER         => true,
                 CURLOPT_CONNECTTIMEOUT => 120,
                 CURLOPT_TIMEOUT        => 120
             ));
@@ -735,13 +705,7 @@ __Petición PHP - Petition PHP__
                 return 'Error: "' . curl_error($curl) . '" - Code: ' . curl_errno($curl);
             }
             curl_close($curl);
-            $data = explode("vegur",$resp);
-            $datos json_decode($data[1]);
-            if($datos->code!="200"){
-              return $datos->message;
-            }else{
-              return $datos;
-            }
+            return json_decode($resp);
     }//
 ```
 
