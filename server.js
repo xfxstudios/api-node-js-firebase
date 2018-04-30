@@ -5,7 +5,6 @@ var admin = require("firebase-admin");
 
 app.use(express.static(path.join(__dirname, 'public')));
 
-  var admin = require("firebase-admin");
     admin.initializeApp({
       credential: admin.credential.cert({
         projectId: "PROJECT ID",
