@@ -121,5 +121,49 @@ export class FirebaseController {
     
     }
 
+    static createUserWithUid(req:Request, res:Response){
+        const email    = req.body.email;
+        const nombre   = req.body.name;
+        const phone    = req.body.phone;
+        const password = req.body.password;
+        const uid = req.body.uid;
+        
+        admin.auth().createUser({
+            uid: uid,
+            email: email,
+            emailVerified: false,
+            phoneNumber: phone,
+            password: password,
+            displayName: nombre,
+            photoURL: "https://cdn0.iconfinder.com/data/icons/social-messaging-ui-color-shapes/128/user-male-circle-blue-512.png",
+            disabled: false
+        })
+        .then((userRecord:any) => {
+            const data = {
+                uid : userRecord.uid,
+                datos : {
+                    email : userRecord.email,
+                    nombre : userRecord.displayName,
+                    foto : userRecord.photoURL,
+                    telefono : userRecord.phoneNumber,
+                },
+                estados : {
+                    emailVerificado : userRecord.emailVerified,
+                    suspendido : userRecord.disabled,
+                },
+                tiempos : {
+                    ultimoLogin : userRecord.metadata.lastSignInTime,
+                    ultimoUpdate : userRecord.metadata.creationTime,
+                },
+                code:'200',
+                message:`Usuario ${userRecord.displayName} creado extosamente`
+            }
+            res.status(200).json(data);
+        })
+        .catch((error:any) => {
+            res.status(404).json(error);
+        });
+    }
+
 
 }
